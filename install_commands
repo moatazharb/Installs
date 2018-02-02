@@ -1,3 +1,5 @@
+# Packages and libraries
+------------------------
 sudo apt-get install gfortran gcc cmake git python-pip cython
 sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
 sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python-tables python-jinja2 autoconf libtool
@@ -6,9 +8,9 @@ sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texliv
 pip install sphinxcontrib-bibtex
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome
 
-
-alara
------
+# alara
+-------
+cd ~/opt
 git clone https://github.com/svalinn/ALARA
 mkdir alara
 cd ALARA
@@ -17,13 +19,13 @@ autoreconf -i
 make
 make install prefix=~/opt/alara
 
-hdf5
-----
-cd opt
-mkdir dagmc_bld/HDF5_1_10
-cd dagmc_bld/HDF5_1_10/bld
-tar -xvf hdf5-1.10.1.tar
-ln -ls hdf5-1.10.1.tar src
+# HDF5
+------
+mkdir -p ~/opt/dagmc_bld/HDF5_1_10/bld
+cd ~/opt/dagmc_bld/HDF5_1_10
+wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.1/src/hdf5-1.10.1.tar.gz
+tar -xvf hdf5-1.10.1.tar.gz
+ln -ls hdf5-1.10.1 src
 cd bld
 ../src/configure --enable-shared --prefix=/home/mharb/opt/dagmc_bld/HDF5_1_10
 make
@@ -31,10 +33,9 @@ make install
 export PATH=$PATH:/home/mharb/opt/dagmc_bld/HDF5_1_10/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/mharb/opt/dagmc_bld/HDF5_1_10/lib
 
-moab for pyne
+# moab for pyne
 -------------
-cd opt
-mkdir MOAB_4_9_1
+mkdir ~/opt/dagmc_bld/MOAB_4_9_1
 cd MOAB_4_9_1
 mkdir bld
 git clone https://bitbucket.org/fathomteam/moab
@@ -50,7 +51,7 @@ make install
 
 pytaps
 ------
-mkdir Pytaps_1_4
+mkdir -p ~/opt/Pytaps_1_4
 wget https://pypi.python.org/packages/source/P/PyTAPS/PyTAPS-1.4.tar.gz
 tar zxvf PyTAPS-1.4.tar.gz
 cd PyTAPS-1.4
@@ -72,12 +73,11 @@ sudo dpkg --add-architecture i386
 sudo apt-get update
 sudo apt-get install wine wine32 wine64 libwine libwine:i386 fonts-wine
 
-dagmc
------
-moab
-----
-cd /home/mharb/opt/dagmc_bld
-mkdir -p MOAB_5/bld
+# dagmc
+-------
+# moab
+------
+mkdir -p ~/opt/dagmc_bld/MOAB_5/bld
 cd MOAB_5
 git clone https://bitbucket.org/fathomteam/moab
 cd moab
@@ -86,9 +86,13 @@ autoreconf -fi
 cd ..
 ln -s moab src
 cd bld
-../src/configure --enable-optimize --enable-shared --disable-debug --with-hdf5=/home/mharb/opt/dagmc_bld/HDF5_1_10_1 --prefix=/home/mharb/opt/dagmc_bld/MOAB_5
+../src/configure --enable-optimize --enable-shared --disable-debug --with-hdf5=/home/mharb/opt/dagmc_bld/HDF5_1_10 --prefix=/home/mharb/opt/dagmc_bld/MOAB_5
+make
+make check
+make install
 
-dagmc_sddr
+# dagmc_sddr
+------------
 cd /home/mharb/opt/dagmc_bld
 mkdir DAGMC
 git clone https://github.com/ljacobson64/DAGMC
@@ -105,7 +109,5 @@ cd bld
 cmake ../DAGMC/ -DBUILD_MCNP5=ON -DCMAKE_INSTALL_PREFIX=/home/mharb/opt/dagmc_bld/DAGMC
 make
 make install
-
-
 
 
