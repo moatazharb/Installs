@@ -8,6 +8,15 @@ sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texliv
 pip install sphinxcontrib-bibtex
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome
 
+pip install -U scikit-image
+
+enable a 32-bit architecture
+------
+dpkg --print-architecture
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install wine wine32 wine64 libwine libwine:i386 fonts-wine
+
 # alara
 -------
 cd ~/opt
@@ -62,16 +71,6 @@ pyne
 git clone https://github.com/pyne/pyne.git
 cd pyne
 git checkout develop
-
-
-pip install -U scikit-image
-
-enable a 32-bit architecture
-------
-dpkg --print-architecture
-sudo dpkg --add-architecture i386
-sudo apt-get update
-sudo apt-get install wine wine32 wine64 libwine libwine:i386 fonts-wine
 
 # dagmc
 -------
