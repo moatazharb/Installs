@@ -124,3 +124,15 @@ cd bld
 cmake ../DAGMC/ -DBUILD_MCNP5=ON -DCMAKE_INSTALL_PREFIX=/home/mharb/opt/dagmc_bld/DAGMC
 make
 make install
+
+# Visit
+mkdir -p ~/opt/visit2_13
+cd ~/opt/visit2_13
+get tar from https://wci.llnl.gov/simulation/computer-codes/visit/executables
+create install txt
+./install 2.13.0 linux-x86_64-ubuntu14 ~/opt/visit2_13
+
+# General notes
+---------------
+- pytrac:
+  save event arrays to txt files and read using numpy.loadtxt rather than concatenate arrays
