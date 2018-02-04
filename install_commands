@@ -8,14 +8,24 @@ sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texliv
 pip install sphinxcontrib-bibtex
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome
 
+# Scipy image comparison package
+--------------------------------
 pip install -U scikit-image
 
-enable a 32-bit architecture
-------
-dpkg --print-architecture
-sudo dpkg --add-architecture i386
+# Enable a 32-bit architecture
+------------------------------
+dpkg --print-foreign-architectures
+# in case 32 bit not supported
+# dpkg --add-architecture i386
+# apt-get update
+# apt-get install libc6:i386 libstdc++6:i386
+
 sudo apt-get update
 sudo apt-get install wine wine32 wine64 libwine libwine:i386 fonts-wine
+
+# Install mcnp5 edited for ptrac processing
+-------------------------------------------
+make build CONFIG="gfortran" PREPROCESS= MARCH=M64 GNUJ=8
 
 # alara
 -------
@@ -92,16 +102,21 @@ make install
 
 # dagmc_sddr
 ------------
-cd /home/mharb/opt/dagmc_bld
-mkdir DAGMC
+mkdir -p /home/mharb/opt/dagmc_bld/DAGMC
+cd /home/mharb/opt/dagmc_bld/DAGMC
 git clone https://github.com/ljacobson64/DAGMC
 git checkout ibrahim
 cd mcnp/mcnp5
 mv Source s
 cp -r /home/mharb/opt/MCNP/MCNP_CODE/MCNP5/Source .
-cp s/* Source/src/.
+cp s/src/* Source/src/.
+chmod +x measure.cpp  measure.h  source.F90  source_sampling.cpp  source_sampling.h
 chmod -R u+rw Source
 patch -p0 < patch/dagmc.5.1.60.patch
+cd mcnp/mcnp6
+cp -r /home/mharb/opt/MCNP/MCNP_CODE/MCNP6/Source .
+chmod -R u+rw Source
+patch -p0 < patch/dagmc.6.1.1beta.patch
 cd /home/mharb/opt/dagmc_bld/DAGMC
 mkdir bld
 cd bld
