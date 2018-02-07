@@ -45,7 +45,7 @@ mkdir -p ~/opt/dagmc_bld/HDF5_1_10/bld
 cd ~/opt/dagmc_bld/HDF5_1_10
 wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.1/src/hdf5-1.10.1.tar.gz
 tar -xvf hdf5-1.10.1.tar.gz
-ln -ls hdf5-1.10.1 src
+ln -s hdf5-1.10.1 src
 cd bld
 ../src/configure --enable-shared --prefix=/home/mharb/opt/dagmc_bld/HDF5_1_10
 make
