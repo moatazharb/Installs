@@ -53,6 +53,9 @@ make install
 export PATH=$PATH:/home/mharb/opt/dagmc_bld/HDF5_1_10/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/mharb/opt/dagmc_bld/HDF5_1_10/lib
 
+## Install a docker images instead
+# without travis tests
+
 # moab for pyne
 -------------
 mkdir ~/opt/dagmc_bld/MOAB_4_9_1
@@ -106,6 +109,7 @@ make install
 mkdir -p /home/mharb/opt/dagmc_bld/DAGMC
 cd /home/mharb/opt/dagmc_bld/DAGMC
 git clone https://github.com/ljacobson64/DAGMC
+cd DAGMC
 git checkout ibrahim
 cd mcnp/mcnp5
 mv Source s
