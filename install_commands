@@ -147,6 +147,8 @@ docker run -it  --name=<container_name> <image_name>
 docker run -it  -v /path/to/folder/to/mount:/path/to/folder/to/mount/into --name=<container_name> <image_name>
 # Open an existing container
 docker start -i <container_name>
+# open a new terminal of an existing container
+docker exec -it <container_name> bash
 
 # General notes
 ---------------
