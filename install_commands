@@ -136,6 +136,18 @@ get tar from https://wci.llnl.gov/simulation/computer-codes/visit/executables
 create install txt
 ./install 2.13.0 linux-x86_64-ubuntu14 ~/opt/visit2_13
 
+
+# Docker
+--------
+# Build an image
+docker build -f <Docker file> -t <docker image name> .
+# Create a container from an existing image
+docker run -it  --name=<container_name> <image_name>
+# Create a container with a mapped folder from the local drive
+docker run -it  -v /path/to/folder/to/mount:/path/to/folder/to/mount/into --name=<container_name> <image_name>
+# Open an existing container
+docker start -i <container_name>
+
 # General notes
 ---------------
 - pytrac:
