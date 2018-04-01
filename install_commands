@@ -1,6 +1,6 @@
 # Packages and libraries
 ------------------------
-sudo apt-get install gfortran gcc cmake git python-pip cython
+sudo apt-get install gfortran gcc cmake git python-pip cython python-yaml
 sudo apt-get install python-numpy python-scipy python-matplotlib
 sudo apt-get install ipython ipython-notebook python-pandas python-sympy python-nose
 sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python-tables python-jinja2 autoconf libtool
