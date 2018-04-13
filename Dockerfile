@@ -11,7 +11,7 @@ RUN apt-get install -y build-essential python-numpy python-scipy cython \
                        python-nose git cmake vim emacs gfortran libblas-dev \
                        liblapack-dev libhdf5-dev gfortran python-tables \
                        python-matplotlib python-jinja2 autoconf libtool \
-		       python-yaml python-setuptools
+                       python-setuptools python-yaml
 
 # need to put libhdf5.so on LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH /usr/lib/x86_64-linux-gnu
@@ -20,6 +20,16 @@ ENV LIBRARY_PATH /usr/lib/x86_64-linux-gnu
 # make starting directory
 RUN cd $HOME \
   && mkdir opt
+
+# build ALARA
+RUN cd $HOME/opt \
+  && mkdir alara \
+  && git clone https://github.com/svalinn/ALARA \
+  && cd ALARA \
+  && autoreconf -i \
+  && ./configure prefix=$HOME/opt/alara \
+  && make \
+  && make install prefix=$HOME/opt/alara
 
 # build MOAB
 RUN cd $HOME/opt \
@@ -54,10 +64,11 @@ RUN cd $HOME/opt \
 
 # Install PyNE
 RUN cd $HOME/opt \
-    && git clone https://github.com/pyne/pyne.git \
+    && git clone https://github.com/moatazharb/pyne \
     && cd pyne \
-    && TAG=$(git describe --abbrev=0 --tags) \
-    && git checkout tags/`echo $TAG` -b `echo $TAG` \
+#    && TAG=$(git describe --abbrev=0 --tags) \
+#    && git checkout tags/`echo $TAG` -b `echo $TAG` \
+    && git checkout gt_cadis_0 \
     && python setup.py install --user -- -DMOAB_LIBRARY=$HOME/opt/moab/lib -DMOAB_INCLUDE_DIR=$HOME/opt/moab/include
 
 RUN echo "export PATH=$HOME/.local/bin:\$PATH" >> ~/.bashrc \
@@ -66,7 +77,8 @@ RUN echo "export PATH=$HOME/.local/bin:\$PATH" >> ~/.bashrc \
 
 ENV LD_LIBRARY_PATH $HOME/.local/lib:$LD_LIBRARY_PATH
 
-RUN cd $HOME/opt/pyne && ./scripts/nuc_data_make \
-    && cd tests \ 
-    && ./travis-run-tests.sh \
+RUN cd $HOME/opt/pyne \
+#     && ./scripts/nuc_data_make \
+#    && cd tests \ 
+#    && ./travis-run-tests.sh \
     && echo "PyNE build complete. PyNE can be rebuilt with the alias 'build_pyne' executed from $HOME/opt/pyne"
