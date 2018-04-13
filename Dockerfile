@@ -68,7 +68,7 @@ RUN cd $HOME/opt \
     && cd pyne \
 #    && TAG=$(git describe --abbrev=0 --tags) \
 #    && git checkout tags/`echo $TAG` -b `echo $TAG` \
-    && git checkout gt_cadis_0 \
+    && git checkout gtcadis_0 \
     && python setup.py install --user -- -DMOAB_LIBRARY=$HOME/opt/moab/lib -DMOAB_INCLUDE_DIR=$HOME/opt/moab/include
 
 RUN echo "export PATH=$HOME/.local/bin:\$PATH" >> ~/.bashrc \
