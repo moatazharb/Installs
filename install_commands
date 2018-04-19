@@ -149,6 +149,14 @@ docker run -it  -v /path/to/folder/to/mount:/path/to/folder/to/mount/into --name
 docker start -i <container_name>
 # open a new terminal of an existing container
 docker exec -it <container_name> bash
+# List images
+docker images -a
+# delete image
+docker rmi <image_id> --force
+# list containers
+docker ps -a
+# delet containers
+docker rm <container_id>
 
 # General notes
 ---------------

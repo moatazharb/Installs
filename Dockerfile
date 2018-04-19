@@ -7,7 +7,7 @@ RUN apt-get install -y --force-yes \
     software-properties-common python-software-properties wget
 
 # pyne specific dependencies
-RUN apt-get install -y build-essential python-numpy python-scipy cython \
+RUN apt-get install -y --fix-missing build-essential python-numpy python-scipy cython \
                        python-nose git cmake vim emacs gfortran libblas-dev \
                        liblapack-dev libhdf5-dev gfortran python-tables \
                        python-matplotlib python-jinja2 autoconf libtool \
