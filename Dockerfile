@@ -31,6 +31,9 @@ RUN cd $HOME/opt \
   && make \
   && make install prefix=$HOME/opt/alara
 
+ENV PATH $HOME/opt/alara/bin:$PATH
+ENV LD_LIBRARY_PATH $HOME/opt/alara/lib:$LD_LIBRARY_PATH
+
 # build MOAB
 RUN cd $HOME/opt \
   && mkdir moab \
@@ -49,6 +52,7 @@ RUN cd $HOME/opt \
   && rm -rf build moab
 
 # put MOAB on the path
+ENV PATH $HOME/opt/moab/bin:$PATH
 ENV LD_LIBRARY_PATH $HOME/opt/moab/lib:$LD_LIBRARY_PATH
 ENV LIBRARY_PATH $HOME/opt/moab/lib:$LIBRARY_PATH
 
