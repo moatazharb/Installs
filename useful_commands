@@ -5,7 +5,7 @@ sudo apt-get install python-numpy python-scipy python-matplotlib
 sudo apt-get install ipython ipython-notebook python-pandas python-sympy python-nose
 sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python-tables python-jinja2 autoconf libtool
 sudo pip install -U Sphinx
-sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker
+sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell
 sudo pip install sphinxcontrib-bibtex
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome
 
@@ -162,6 +162,11 @@ docker rm <container_id>
 # Join pdf files
 sudo apt-get install pdftk
 pdftk file1 file2 cat output file_output
+
+# LaTeX
+-------
+# spell checking
+aspell -a -c <file name>
 
 # General notes
 ---------------
