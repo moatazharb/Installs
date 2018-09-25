@@ -158,6 +158,11 @@ docker ps -a
 # delet containers
 docker rm <container_id>
 
+# PDF
+# Join pdf files
+sudo apt-get install pdftk
+pdftk file1 file2 cat output file_output
+
 # General notes
 ---------------
 - pytrac:
