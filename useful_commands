@@ -168,6 +168,9 @@ pdftk file1 file2 cat output file_output
 # spell checking
 aspell -a -c <file name>
 
+# Reboot issue
+- tap > boot to last stable image (recovery mode) > update boot loader > repair dpkg
+
 # General notes
 ---------------
 - pytrac:
