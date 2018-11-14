@@ -166,7 +166,7 @@ pdftk file1 file2 cat output file_output
 # LaTeX
 -------
 # spell checking
-aspell -a -c <file name>
+aspell -t -c <file name>
 
 # Reboot issue
 - tap > boot to last stable image (recovery mode) > update boot loader > repair dpkg
