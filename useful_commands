@@ -1,5 +1,12 @@
 # Packages and libraries
 ------------------------
+# to find a package
+stat <package name>
+# To find package name to install
+sudo apt-get install apt-file
+apt-file update
+apt-file search <package name>
+
 sudo apt-get install gfortran gcc cmake git python-pip cython python-yaml
 sudo apt-get install python-numpy python-scipy python-matplotlib
 sudo apt-get install ipython ipython-notebook python-pandas python-sympy python-nose
