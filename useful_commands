@@ -4,10 +4,17 @@ sudo apt-get install gfortran gcc cmake git python-pip cython python-yaml
 sudo apt-get install python-numpy python-scipy python-matplotlib
 sudo apt-get install ipython ipython-notebook python-pandas python-sympy python-nose
 sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python-tables python-jinja2 autoconf libtool
-sudo pip install -U Sphinx
 sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell
-sudo pip install sphinxcontrib-bibtex
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome
+sudo pip install -U Sphinx
+sudo pip install sphinxcontrib-bibtex
+
+# Installing Python in virtual environment
+virtualenv -p python3.5  Py3.5
+source Py3.5/bin/activate
+pip install --upgrade pip
+pip install -U Sphinx
+pip install sphinxcontrib-bibtex
 
 # Scipy image comparison package
 --------------------------------
