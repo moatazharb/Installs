@@ -1,0 +1,72 @@
+Naming conventions:
+We should use a coherent naming scheme like this (open to discussion):
+- ClassNames (upper camel case)
+- variableNames (lower camel case)
+- functionNames (lower camel case)
+- NamespaceNames (upper camel case; no general convention exists afaik, so let's stick to our current usage)
+
+
+Most Vexing Parse and braced initialization:
+Let T and U be types. Let T have a constructor that takes a U-object as parameter, e.g.
+	T::T(const U& u);
+Let U have a default constructor, i.e.
+	U::U();
+Then one can create an unnamed object of type U by writing
+	U()
+somewhere in the code. One can create an object of type T by writing
+	U u;
+	T obj(u);
+So one would expect that the line
+	T obj(U());
+creates an unnamed object of type U, using U's default constructor, and passes this unnamed U-object to the constructor of the type T to create a T-object named "obj".
+However, that is not what the last line of code does! It declares a function of name "obj" which takes a parameter of type U() and returns an object of type T.
+So, what is an object of type U()? It is a function pointer to a function which takes no parameter and returns a U-object.
+In short: The code
+	T obj(U());
+declares a function named obj which takes as argument a "pointer to a function with no arguments and return type U" and which returns T. This phenomenon is called the "most vexing parse"
+Welcome to the world of C++ :-)
+To avoid this, one can use {} instead of () to call a constructor. The line
+	T obj{U{}};
+is totally unambiguous: It creates an unnamed U-object and passes it to the constructor of the T-object.
+
+
+Inner classes and the pImpl idiom:
+One can declare classes inside other classes, too. In the pImpl idiom, the type "Impl" is often a (private) inner class.
+That reduces the necessity to include the header where the Impl-class is defined (=> that's why the idiom is known as a compiler fire wall).
+
+
+Smart pointers and the pImpl idiom:
+Instead of "bare" pointers like
+	T* ptr;
+modern C++ prefers to use "smart" pointers like std::unique_ptr<T> and std::shared_ptr<T>.
+Smart pointers manage the lifetime of their objects on their own, so there is no need to call "new" or "delete" (which would result in memory leaks, if done incorrectly).
+The proper choice of smart pointers for the pImpl idiom is a std::unique_ptr. It allows for just one variable to point to the pointee and if that variable goes out of scope, then "delete" will be called on the pointee automatically.
+The usage of a smart pointer in the pImpl idiom has the advantage that we need not care about memory management.
+But it also has downsides: Since we don't want to include the header file of the implementation class Impl, it does not know how to default construct (or how to destroy) an object of type std::unique_ptr<Impl>. Thus, the compiler can define neither a default constructor nor a default destructor - they have to be defined manually in the .cpp file.
+[Note: Instead of writing "new T{...}", unique pointers are created by the function "std::make_unique<T>(...)".]
+(cf. https://en.cppreference.com/w/cpp/memory/unique_ptr)
+
+
+Constructors and member initializer lists:
+Let type T have a data member of type U and a constructor that takes an object of type U:
+	class T{
+	public:
+		T(U u);
+	private:
+		U u;
+	};
+Naively one could implement the constructor like this:
+	T::T(U u){
+		this->u = u;
+	}
+However, then the following would happen at creation of a T-object: Memory is allocated for the T-object. The data member u is default constructed. Then the argument u (which is different from the data member u) is assigned to the data member u (so the value it had before this assignment is discarded). In this case, the default construction of the data member u was unnecessary and potentially quite costly (if U has an expensive default constructor). This is why the following code may be more efficient:
+	T::T(U u)
+	   : u{u}{
+	}
+Here, first memory for the T-object is allocated, then the data member u is constructed by copying the argument u. (The latter construct is called a member initializer list).
+(cf. https://en.cppreference.com/w/cpp/language/initializer_list, https://en.cppreference.com/w/cpp/language/default_constructor)
+
+
+Passing variables by constant reference:
+Often one passes objects that are expensive to copy not by value "f(T t)" but by reference "f(T& t)". Then only a pointer-like handle is passed to the function which can be much cheaper. However, now the function "f" has the permission to mutate/change the value of the passed variable. If "f" does NOT change/mutate the value of "t" this is indicated by writing "f(const T& t)". It makes clear to the reader, that "t" will be the same after the function call. Using the keyword "const" properly is a big issue in C++ which is called Const Correctness. If done consistently, it can make programs safer and more efficient (because the compiler can optimize more if it knows that variables will only be read but not be written to).
+(cf. https://isocpp.org/wiki/faq/const-correctness)
