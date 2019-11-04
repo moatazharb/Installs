@@ -194,6 +194,12 @@ aspell -t -c <file name>
 # Reboot issue
 - tap > boot to last stable image (recovery mode) > update boot loader > repair dpkg
 
+# MPI fixes
+export FI_SOCKETS_IFACE=eth0
+export FI_PROVIDER=tcp
+export FI_LOG_LEVEL=debug
+export I_MPI_FABRICS=shm
+
 # General notes
 ---------------
 - pytrac:
