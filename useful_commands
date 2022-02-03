@@ -7,14 +7,22 @@ sudo apt-get install apt-file
 apt-file update
 apt-file search <package name>
 
-sudo apt-get install gfortran gcc cmake git python-pip cython python-yaml
-sudo apt-get install python-numpy python-scipy python-matplotlib
-sudo apt-get install ipython ipython-notebook python-pandas python-sympy python-nose
-sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python-tables python-jinja2 autoconf libtool
+# Update default python
+sudo update-alternatives --config python
+update-alternatives: error: no alternatives for python3
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
+sudo update-alternatives --config python
+sudo update-alternatives  --set python /usr/bin/python3.8
+
+sudo apt-get install gfortran gcc cmake git python3-pip cython python3-yaml
+sudo apt-get install python3-numpy python3-scipy python3-matplotlib
+sudo apt-get install ipython ipython-notebook python3-pandas python3-sympy python3-nose
+sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python3-tables python3-jinja2 autoconf libtool
 sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome python-virtualenv
 sudo pip install -U Sphinx
 sudo pip install sphinxcontrib-bibtex
+sudo apt-get install flex bison
 
 # Installing Python in virtual environment
 virtualenv -p python3.5  Py3.5
@@ -33,8 +41,8 @@ sudo pip install -U scikit-image
 # Update c++ compiler
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update
-sudo apt-get install gcc-<latest_release"9"> g++-<latest_release"9">
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-<latest_release"9"> 20 --slave /usr/bin/g++ g++ /usr/bin/g++-<latest_release"9">
+sudo apt-get install gcc-<latest_release"9"> g++-<latest_release"10">
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-<latest_release"10"> 20 --slave /usr/bin/g++ g++ /usr/bin/g++-<latest_release"10">
 
 # Enable a 32-bit architecture
 ------------------------------
@@ -199,6 +207,17 @@ export FI_SOCKETS_IFACE=eth0
 export FI_PROVIDER=tcp
 export FI_LOG_LEVEL=debug
 export I_MPI_FABRICS=shm
+
+# OpenGL
+sudo apt-get install libxinerama-dev libxcursor-dev libxi-dev freeglut3-dev
+git clone https://github.com/glfw/glfw.git
+cd glfw
+mkdir build
+cmake .. -DCMAKE_INSTALL_PREFIX=<build>
+make && make install
+
+# FreeType
+sudo apt-get install libpng-dev bzip2 libharfbuzz-dev
 
 # General notes
 ---------------
