@@ -14,15 +14,16 @@ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
 sudo update-alternatives --config python
 sudo update-alternatives  --set python /usr/bin/python3.8
 
-sudo apt-get install gfortran gcc cmake git python3-pip cython python3-yaml
-sudo apt-get install python3-numpy python3-scipy python3-matplotlib
-sudo apt-get install ipython ipython-notebook python3-pandas python3-sympy python3-nose
+sudo apt-get install gfortran gcc git python3-pip python3-yaml
+sudo apt-get install jupyter python3-numpy python3-scipy python3-matplotlib
+sudo apt-get install python3-pandas python3-sympy python3-nose
 sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python3-tables python3-jinja2 autoconf libtool
 sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome python-virtualenv
-sudo pip install -U Sphinx
-sudo pip install sphinxcontrib-bibtex
+sudo pip3 install -U Sphinx
+sudo pip3 install sphinxcontrib-bibtex
 sudo apt-get install flex bison
+pip3 install notebook Cython
 
 # Installing Python in virtual environment
 virtualenv -p python3.5  Py3.5
