@@ -14,16 +14,15 @@ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
 sudo update-alternatives --config python
 sudo update-alternatives  --set python /usr/bin/python3.8
 
-sudo apt-get install gfortran gcc git python3-pip python3-yaml
+sudo apt-get install gfortran g++ gcc git python3-pip python3-yaml
 sudo apt-get install jupyter python3-numpy python3-scipy python3-matplotlib
 sudo apt-get install python3-pandas python3-sympy python3-nose
 sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python3-tables python3-jinja2 autoconf libtool
 sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome python-virtualenv
-sudo pip3 install -U Sphinx
-sudo pip3 install sphinxcontrib-bibtex
+sudo pip3 install -U Sphinx sphinxcontrib-bibtex
 sudo apt-get install flex bison
-pip3 install notebook Cython
+pip3 install notebook Cython pytest
 sudo apt-get install libhdf5-dev libhdf5-mpich-dev libhdf5-openmpi-dev libpng-dev mpich libmpich-dev openmpi-bin libopenmpi-dev libboost-all-dev
 
 # Installing Python in virtual environment
@@ -32,13 +31,10 @@ virtualenv -p python3.5  Py3.5
 source Py3.5/bin/activate
 # To deactivate the envirnment
 deactivate
-pip install --upgrade pip
-pip install -U Sphinx
-pip install sphinxcontrib-bibtex
 
 # Scipy image comparison package
 --------------------------------
-sudo pip install -U scikit-image
+pip3 install -U scikit-image
 
 # Update c++ compiler
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
@@ -234,4 +230,21 @@ add the following to ~/.ssh/config
   Hostname ssh.github.com
   Port 443
 
+#VTK
+sudo apt install cmake libavcodec-dev libavformat-dev libavutil-dev libboost-dev libdouble-conversion-dev libeigen3-dev libexpat1-dev libfontconfig-dev libfreetype6-dev libgdal-dev libglew-dev libhdf5-dev libjpeg-dev libjsoncpp-dev liblz4-dev liblzma-dev libnetcdf-dev libnetcdf-cxx-legacy-dev libogg-dev libpng-dev libpython3-dev libqt5opengl5-dev libqt5x11extras5-dev libsqlite3-dev libswscale-dev libtheora-dev libtiff-dev libxml2-dev libxt-dev qtbase5-dev qttools5-dev zlib1g-dev
+git clone https://gitlab.kitware.com/vtk/
+git checkout v8.2.0
+mkdir build %% cd build
+rm -rf * && cmake .. -DCMAKE_INSTALL_PREFIX=/home/mharb/Installs/vtk -DCMAKE_INSTALL_RPATH=/home/mharb/Installs/vtk -DVTK_Group_Qt=ON -DVTK_Group_Imaging=ON -DVTK_Group_Views=O -DModule_vtkRenderingFreeTypeFontConfig=ON -DVTK_WRAP_PYTHON=ON -DVTK_PYTHON_VERSION=3 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.10 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.10.so -DBUILD_TESTING=OFF -DVTK_USE_SYSTEM_LIBRARIES=ON -DVTK_USE_SYSTEM_LIBPROJ=OFF -DVTK_USE_SYSTEM_GL2PS=OFF -DVTK_USE_SYSTEM_LIBHARU=OFF -DVTK_USE_SYSTEM_PUGIXML=OFF -DCMAKE_BUILD_TYPE=Release
 
+# OpenMC
+HDF5_ROOT=/home/mharb/Installs/dagmc/HDF5/build cmake .. -DOPENMC_USE_DAGMC=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/dagmc/DAGMC/build -DOPENMC_USE_LIBMESH=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/libmesh/build -DHDF5_PREFER_PARALLEL=on -DOPENMC_USE_MPI=on -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/mharb/Installs/openmc
+# install conda
+# install vectfit
+conda install -c conda-forge xtensor-blas xtensor-python
+git clone https://github.com/liangjg/vectfit.git
+pip install ./vectfit
+
+download data using tools/ci/
+# run tests using
+OPENMC_CROSS_SECTIONS=/home/mharb/Sources/Nuclear_Data/openmc/nndc_hdf5/cross_sections.xml OPENMC_ENDF_DATA=/home/mharb/Sources/Nuclear_Data/openmc/endf-b-vii.1 pytest-3
