@@ -1,6 +1,6 @@
-sudo apt-get install gfortran g++ gcc git python3-pip python3-yaml jupyter python3-numpy python3-scipy python3-matplotlib python3-pandas python3-sympy python3-nose vim emacs libblas-dev liblapack-dev python3-tables python3-jinja2 autoconf libtool libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell openmpi-bin libopenmpi-dev mpich libmpich-dev libpng-dev libhdf5-dev hdf5-tools libhdf5-mpich-dev libhdf5-openmpi-dev apt-file flex bison libeigen3-dev libboost-all-dev plocate
+sudo apt-get install gfortran g++ gcc git python3-pip python3-yaml jupyter python3-numpy python3-scipy python3-matplotlib python3-pandas python3-sympy python3-nose vim emacs libblas-dev liblapack-dev python3-tables python3-jinja2 autoconf libtool libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell openmpi-bin libopenmpi-dev mpich libmpich-dev libpng-dev libhdf5-dev hdf5-tools libhdf5-mpich-dev libhdf5-openmpi-dev apt-file flex bison libeigen3-dev libboost-all-dev plocate vtk7 python3-vtk7
 apt-file update
-sudo pip3 install -U Sphinx sphinxcontrib-bibtex notebook Cython pytest
+pip3 install -U Sphinx sphinxcontrib-bibtex notebook Cython pytest h5py
 
 sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome python-virtualenv
 
@@ -248,12 +248,40 @@ $ ../src/configure --enable-optimize --enable-shared --disable-debug --with-hdf5
 $ make && make install
 
 cmake .. -DOPENMC_USE_DAGMC=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/dagmc/DAGMC/build -DOPENMC_USE_LIBMESH=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/libmesh/build -DHDF5_PREFER_PARALLEL=on -DOPENMC_USE_MPI=on -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/mharb/Installs/openmc
-# install conda
-# install vectfit
-conda install -c conda-forge xtensor-blas xtensor-python
-git clone https://github.com/liangjg/vectfit.git
-pip install ./vectfit
+make
+cd ../ & pip3 install .
 
+#NJOY2016
+git clone https://github.com/njoy/NJOY2016.git
+cd NJOY2016
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j8
+cd tests && make test
+
+# OpenMC
 download data using tools/ci/
 # run tests using
-OPENMC_CROSS_SECTIONS=/home/mharb/Sources/Nuclear_Data/openmc/nndc_hdf5/cross_sections.xml OPENMC_ENDF_DATA=/home/mharb/Sources/Nuclear_Data/openmc/endf-b-vii.1 pytest-3
+OPENMC_CROSS_SECTIONS=/home/mharb/Sources/Nuclear_Data/openmc/nndc_hdf5/cross_sections.xml OPENMC_ENDF_DATA=/home/mharb/Sources/Nuclear_Data/openmc/endf-b-vii.1 pytest
+
+# install conda
+conda install -c conda-forge xtensor xtensor-blas xtensor-python
+# xtl
+git clone https://github.com/xtensor-stack/xtl
+cd xtl && mkdir build && cmake .. && sudo make install
+# xtensor
+git clone https://github.com/xtensor-stack/xtensor
+cd xtl && mkdir build && cmake .. && sudo make install
+# xtensor-blas
+git clone https://github.com/xtensor-stack/xtensor-blas
+cd xtl && mkdir build && cmake .. && sudo make install
+# xtensor-python
+git clone https://github.com/xtensor-stack/xtensor-python
+cd xtl && mkdir build && cmake .. && sudo make install
+# install vectfit
+git clone https://github.com/liangjg/vectfit.git
+pip3 install ./vectfit
+
+# opencascade
+sudo apt-get install tcllib tklib tcl-dev tk-dev libfreetype-dev libxt-dev libxmu-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libfreeimage-dev libtbb-dev
