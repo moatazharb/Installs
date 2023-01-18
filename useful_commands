@@ -1,3 +1,9 @@
+sudo apt-get install gfortran g++ gcc git python3-pip python3-yaml jupyter python3-numpy python3-scipy python3-matplotlib python3-pandas python3-sympy python3-nose vim emacs libblas-dev liblapack-dev python3-tables python3-jinja2 autoconf libtool libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell openmpi-bin libopenmpi-dev mpich libmpich-dev libpng-dev libhdf5-dev hdf5-tools libhdf5-mpich-dev libhdf5-openmpi-dev apt-file flex bison libeigen3-dev libboost-all-dev plocate
+apt-file update
+sudo pip3 install -U Sphinx sphinxcontrib-bibtex notebook Cython pytest
+
+sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome python-virtualenv
+
 # Packages and libraries
 ------------------------
 # to find a package
@@ -13,17 +19,6 @@ update-alternatives: error: no alternatives for python3
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.8 1
 sudo update-alternatives --config python
 sudo update-alternatives  --set python /usr/bin/python3.8
-
-sudo apt-get install gfortran g++ gcc git python3-pip python3-yaml
-sudo apt-get install jupyter python3-numpy python3-scipy python3-matplotlib
-sudo apt-get install python3-pandas python3-sympy python3-nose
-sudo apt-get install vim emacs libblas-dev liblapack-dev libhdf5-dev python3-tables python3-jinja2 autoconf libtool
-sudo apt-get install libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell
-sudo apt-get install openconnect network-manager-openconnect network-manager-openconnect-gnome python-virtualenv
-sudo pip3 install -U Sphinx sphinxcontrib-bibtex
-sudo apt-get install flex bison
-pip3 install notebook Cython pytest
-sudo apt-get install libhdf5-dev libhdf5-mpich-dev libhdf5-openmpi-dev libpng-dev mpich libmpich-dev openmpi-bin libopenmpi-dev libboost-all-dev
 
 # Installing Python in virtual environment
 virtualenv -p python3.5  Py3.5
@@ -215,7 +210,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=<build>
 make && make install
 
 # FreeType
-sudo apt-get install libpng-dev bzip2 libharfbuzz-dev
+sudo apt-get install bzip2 libharfbuzz-dev
 
 # General notes
 ---------------
@@ -238,7 +233,21 @@ mkdir build %% cd build
 rm -rf * && cmake .. -DCMAKE_INSTALL_PREFIX=/home/mharb/Installs/vtk -DCMAKE_INSTALL_RPATH=/home/mharb/Installs/vtk -DVTK_Group_Qt=ON -DVTK_Group_Imaging=ON -DVTK_Group_Views=O -DModule_vtkRenderingFreeTypeFontConfig=ON -DVTK_WRAP_PYTHON=ON -DVTK_PYTHON_VERSION=3 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.10 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.10.so -DBUILD_TESTING=OFF -DVTK_USE_SYSTEM_LIBRARIES=ON -DVTK_USE_SYSTEM_LIBPROJ=OFF -DVTK_USE_SYSTEM_GL2PS=OFF -DVTK_USE_SYSTEM_LIBHARU=OFF -DVTK_USE_SYSTEM_PUGIXML=OFF -DCMAKE_BUILD_TYPE=Release
 
 # OpenMC
-HDF5_ROOT=/home/mharb/Installs/dagmc/HDF5/build cmake .. -DOPENMC_USE_DAGMC=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/dagmc/DAGMC/build -DOPENMC_USE_LIBMESH=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/libmesh/build -DHDF5_PREFER_PARALLEL=on -DOPENMC_USE_MPI=on -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/mharb/Installs/openmc
+Install latest cmake: 
+$ cmake .. -DCMAKE_USE_OPENSSL=OFF
+Install libmesh
+Install MOAB:
+$ mkdir MOAB
+$ cd MOAB
+$ git clone https://bitbucket.org/fathomteam/moab
+$ cd moab
+$ autoreconf -fi
+$ cd ..
+$ ln -s moab src
+$ ../src/configure --enable-optimize --enable-shared --disable-debug --with-hdf5=/usr/lib/x86_64-linux-gnu/hdf5/serial --download-netcdf --prefix=/home/mharb/Installs/MOAB/build
+$ make && make install
+
+cmake .. -DOPENMC_USE_DAGMC=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/dagmc/DAGMC/build -DOPENMC_USE_LIBMESH=on -DCMAKE_PREFIX_PATH=/home/mharb/Installs/libmesh/build -DHDF5_PREFER_PARALLEL=on -DOPENMC_USE_MPI=on -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/home/mharb/Installs/openmc
 # install conda
 # install vectfit
 conda install -c conda-forge xtensor-blas xtensor-python
