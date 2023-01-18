@@ -1,4 +1,4 @@
-sudo apt-get install gfortran g++ gcc git python3-pip python3-yaml jupyter python3-numpy python3-scipy python3-matplotlib python3-pandas python3-sympy python3-nose vim emacs libblas-dev liblapack-dev python3-tables python3-jinja2 autoconf libtool libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell openmpi-bin libopenmpi-dev mpich libmpich-dev libpng-dev libhdf5-dev hdf5-tools libhdf5-mpich-dev libhdf5-openmpi-dev apt-file flex bison libeigen3-dev libboost-all-dev plocate vtk7 python3-vtk7
+sudo apt-get install gfortran g++ gcc git python3-pip python3-yaml jupyter python3-numpy python3-scipy python3-matplotlib python3-pandas python3-sympy python3-nose vim emacs libblas-dev liblapack-dev python3-tables python3-jinja2 autoconf libtool libc6 libc6-dev gcc-multilib g++-multilib libx11-dev texlive-full texmaker aspell openmpi-bin libopenmpi-dev mpich libmpich-dev libpng-dev libhdf5-dev hdf5-tools libhdf5-mpich-dev libhdf5-openmpi-dev apt-file flex bison libeigen3-dev libboost-all-dev plocate vtk7 python3-vtk7 virtualbox-guest-utils
 apt-file update
 pip3 install -U Sphinx sphinxcontrib-bibtex notebook Cython pytest h5py
 
