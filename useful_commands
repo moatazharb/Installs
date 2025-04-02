@@ -221,8 +221,12 @@ sudo apt-get install bzip2 libharfbuzz-dev
 ssh-keygen -t ed25519 -C "moatazharb@gmail.com"
 cat ~/.ssh/id_ed25519.pub
 add the following to ~/.ssh/config
-  Host github.com
+Host github.com
   Hostname ssh.github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile /Users/4mh/.ssh/id_ed25519
+  IgnoreUnknown UseKeychain
   Port 443
 
 #VTK
@@ -289,3 +293,63 @@ sudo apt-get install tcllib tklib tcl-dev tk-dev libfreetype-dev libxt-dev libxm
 ## WSL on WIN10
 # To fix a connection issue
 echo nameserver 8.8.8.8 | sudo tee /etc/resolv.conf
+
+- To install Ubuntu on Windows:
+	- Install WSL2 from the Windows store
+	- To allow it to connect to the internet, one needs to update /etc/resolv.conf with the following:
+	nameserver 10.1.11.166
+	nameserver 10.1.11.168
+	search ornl.gov
+	If outside ORNL, the above need to be updated. [not yet tested]
+	- VS Code wokrs with WSL. To use it:
+		- run WSL from a terminal, Ubuntu20.04.exe
+		- run code . from a terminal. A new VS code window will open.
+		- To copy folders over use /mnt/...
+	- One can use jupyter and conda inside the wsl. Install the VS code extensions and all the python environments should appear when trying to select a kernel
+	- Conda: 
+		- sudo apt update
+		- sudo apt upgrade -y
+		- wget <paste_the_download_link_here>
+		- bash Anaconda3-*.sh
+		- export PATH="/home/yourusername/anaconda3/bin:$PATH"
+		- source ~/.bashrc
+		- If need to install specific python version inside conda: create a new environment conda create -n name python=3.7
+- Cubit:
+	- Cubit plugins are best matched by date of release. Currently, the only success is with Ubuntu20.4, Cubit15.8, svalinn_plugin_ubuntu-20.04_cubit_2021.4. [Failed installation on Windows and MacOS, haven't tested Ubuntu22]
+	- To apply the plugin: extract cubit > copy over the plugin tar ball into cubit folder > extract > update LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH="path/to/Cubit-15.8/bin/plugins/svalinn":$LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH="path/to/Cubit-15.8/bin/plugins":$LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH="path/to/Cubit-15.8/bin":$LD_LIBRARY_PATH
+	- If plugin was installed correctly, one should get the message below when booting up cubit:
+		-- DAGMC export command available.
+		-- iGeom_test command available.
+		-- MCNP import command available.
+	- To import cubit as a module, it is better to call python that comes with it! This avoids a headache of not found libraries.
+	
+	
+Error:
+	-  libGLU.so.1: 
+	sudo apt-get update
+	sudo apt-get install libglu1-mesa
+	- nlopt:
+	conda install -c conda-forge nlopt or pip install nlopt
+	
+OpenMC:
+	- conda config --add channels conda-forge
+	- conda config --set channel_priority strict
+	- conda search openmc
+	- conda create --name openmc-env0150 openmc=0.15.0
+	- conda activate openmc-env0150
+	- conda install -n openmc-env0150 ipykernel --update-deps --force-reinstall
+	- conda install -n openmc-env0150 conda-forge::vtk
+        - pip install openmc-plotter
+
+Cubit:
+	- section view: Graphics Clip {on|off} [ Plane <options> | [Location <location>] [Direction <direction>]]
+                    Graphics Clip Manipulation {on|off}
+	- Autoheal with build bodies
+	- Auto clean
+	- Validate
+	
+DAGMC:
+	- Don't use a planar source, only, for reflective boundary conditions. This gives error with the sense of the surfaces after imprinting. Best practice is to create a thin volume and use the desired surface for reflective boundaries.
